@@ -76,7 +76,7 @@ class LoginController: UIViewController {
         pwdTextField.translatesAutoresizingMaskIntoConstraints = false
         pwdTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         pwdTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        pwdTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        pwdTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
         pwdTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
     }
 }
