@@ -32,6 +32,8 @@ class LoginController: UIViewController {
         type: .password
     )
     
+    let loginButton = RoundedButton(buttonTItle: "로그인 하기")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -47,6 +49,7 @@ class LoginController: UIViewController {
         view.addSubview(mainLabel)
         view.addSubview(emailTextField)
         view.addSubview(pwdTextField)
+        view.addSubview(loginButton)
     }
     
     // Constraints
@@ -54,6 +57,7 @@ class LoginController: UIViewController {
         mainLabelConstraints()
         emailTextFieldConstraints()
         pwdTextFieldConstraints()
+        loginButtonConstraints()
     }
     
     func mainLabelConstraints() {
@@ -78,5 +82,13 @@ class LoginController: UIViewController {
         pwdTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
         pwdTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
         pwdTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
+    }
+    
+    func loginButtonConstraints() {
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButton.topAnchor.constraint(equalTo: pwdTextField.bottomAnchor, constant: 50).isActive = true
     }
 }
