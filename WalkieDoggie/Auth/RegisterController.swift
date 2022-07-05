@@ -30,6 +30,13 @@ class RegisterController: UIViewController {
         type: .password
     )
     
+    let pwdValidateTextField = AuthTextField(
+        titleText: "비밀번호 확인",
+        placeholderText: "비밀번호를 입력해주세요.",
+        descriptionText: "비밀번호가 일치하지 않습니다.",
+        type: .password
+    )
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -45,12 +52,14 @@ class RegisterController: UIViewController {
         view.addSubview(mainLabel)
         view.addSubview(emailTextField)
         view.addSubview(pwdTextField)
+        view.addSubview(pwdValidateTextField)
     }
     
     func setConstraints() {
         mainLabelConstraints()
         emailTextFieldConstraints()
         pwdTextFieldConstraints()
+        pwdValidateTextFieldConstraints()
     }
     
     func mainLabelConstraints() {
@@ -75,6 +84,14 @@ class RegisterController: UIViewController {
         pwdTextField.heightAnchor.constraint(equalToConstant: 88).isActive = true
         pwdTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
         pwdTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
+    }
+    
+    func pwdValidateTextFieldConstraints() {
+        pwdValidateTextField.translatesAutoresizingMaskIntoConstraints = false
+        pwdValidateTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        pwdValidateTextField.heightAnchor.constraint(equalToConstant: 88).isActive = true
+        pwdValidateTextField.topAnchor.constraint(equalTo: pwdTextField.bottomAnchor).isActive = true
+        pwdValidateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
 }
