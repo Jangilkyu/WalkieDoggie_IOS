@@ -37,6 +37,8 @@ class RegisterController: UIViewController {
         type: .password
     )
     
+    let registerButton = RoundedButton(buttonTItle: "회원가입 하기")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -53,6 +55,7 @@ class RegisterController: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(pwdTextField)
         view.addSubview(pwdValidateTextField)
+        view.addSubview(registerButton)
     }
     
     func setConstraints() {
@@ -60,6 +63,7 @@ class RegisterController: UIViewController {
         emailTextFieldConstraints()
         pwdTextFieldConstraints()
         pwdValidateTextFieldConstraints()
+        registerButtonConstraints()
     }
     
     func mainLabelConstraints() {
@@ -94,4 +98,12 @@ class RegisterController: UIViewController {
         pwdValidateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
+    func registerButtonConstraints() {
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
+        registerButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        registerButton.topAnchor.constraint(equalTo: pwdValidateTextField.bottomAnchor).isActive = true
+    }
+
 }
