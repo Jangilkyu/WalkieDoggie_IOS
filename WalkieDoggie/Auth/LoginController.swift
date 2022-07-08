@@ -43,6 +43,29 @@ class LoginController: UIViewController {
     
     func setup() {
         view.backgroundColor = .white
+        configureLoginButton()
+    }
+    
+    func configureLoginButton() {
+        loginButton.button.addTarget(
+            self,
+            action: #selector(handleLoginButton),
+            for: .touchUpInside
+        )
+    }
+    
+    @objc func handleLoginButton() {
+        if !emailTextField.textField.isEmail() {
+            emailTextField.showErrorDescription()
+        } else {
+            emailTextField.hideErrorDescription()
+        }
+        
+        if !pwdTextField.textField.isValidPwd() {
+            pwdTextField.showErrorDescription()
+        } else {
+            pwdTextField.hideErrorDescription()
+        }
     }
     
     func addViews() {

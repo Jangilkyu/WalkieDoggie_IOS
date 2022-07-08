@@ -44,6 +44,7 @@ class AuthTextField: UIView {
         titleLabel.text = titleText
         textField.placeholder = placeholderText
         descriptionLabel.text = descriptionText
+        setType(type: type)
         
         addViews()
         setConstraints()
@@ -51,6 +52,27 @@ class AuthTextField: UIView {
     
     required init?(coder: NSCoder) {
         return nil
+    }
+    
+    func showErrorDescription() {
+        descriptionLabel.isHidden = false
+    }
+    
+    func hideErrorDescription() {
+        descriptionLabel.isHidden = true
+    }
+    
+    func setType(type: AuthTextFieldTypes) {
+        switch type {
+        case .email:
+            textField.keyboardType = .emailAddress
+            textField.textContentType = .emailAddress
+            textField.autocorrectionType = .no
+        case .password:
+            textField.keyboardType = .default
+            textField.isSecureTextEntry = true
+            textField.textContentType = .password
+        }
     }
     
     func addViews() {
