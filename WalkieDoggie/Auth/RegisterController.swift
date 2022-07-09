@@ -48,6 +48,14 @@ class RegisterController: UIViewController {
     
     func setup() {
         view.backgroundColor = .white
+        configureRegisterButton()
+    }
+    
+    func configureRegisterButton() {
+        registerButton.button.addTarget(self, action: #selector(handleRegisterButton), for: .touchUpInside)
+    }
+    
+    @objc func handleRegisterButton() {
     }
     
     func addViews() {
