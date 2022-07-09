@@ -57,14 +57,18 @@ class LoginController: UIViewController {
     @objc func handleLoginButton() {
         if !emailTextField.textField.isEmail() {
             emailTextField.showErrorDescription()
+            emailTextField.showValidationErrorColor()
         } else {
             emailTextField.hideErrorDescription()
+            emailTextField.hideValidationErrorColor()
         }
         
         if !pwdTextField.textField.isValidPwd() {
             pwdTextField.showErrorDescription()
+            pwdTextField.showValidationErrorColor()
         } else {
             pwdTextField.hideErrorDescription()
+            pwdTextField.hideValidationErrorColor()
         }
     }
     

@@ -62,6 +62,16 @@ class AuthTextField: UIView {
         descriptionLabel.isHidden = true
     }
     
+    func showValidationErrorColor() {
+        titleLabel.textColor = WDColor.red.color
+        textField.tintColor = WDColor.red.color
+    }
+    
+    func hideValidationErrorColor() {
+        titleLabel.textColor = WDColor.darkGray.color
+        textField.tintColor = WDColor.blue.color
+    }
+    
     private func setType(type: AuthTextFieldTypes) {
         switch type {
         case .email:
