@@ -46,19 +46,45 @@ class RegisterController: UIViewController {
         setConstraints()
     }
     
-    func setup() {
+    private func setup() {
         view.backgroundColor = .white
         configureRegisterButton()
     }
     
-    func configureRegisterButton() {
-        registerButton.button.addTarget(self, action: #selector(handleRegisterButton), for: .touchUpInside)
+    private func configureRegisterButton() {
+        registerButton.button.addTarget(
+            self,
+            action: #selector(handleRegisterButton),
+            for: .touchUpInside)
     }
     
-    @objc func handleRegisterButton() {
+    @objc private func handleRegisterButton() {
+        if !emailTextField.textField.isEmail() {
+            emailTextField.showErrorDescription()
+            emailTextField.showValidationErrorColor()
+        } else {
+            emailTextField.hideErrorDescription()
+            emailTextField.hideValidationErrorColor()
+        }
+        
+        if !pwdTextField.textField.isValidPwd() {
+            pwdTextField.showErrorDescription()
+            pwdTextField.showValidationErrorColor()
+        } else {
+            pwdTextField.hideErrorDescription()
+            pwdTextField.hideValidationErrorColor()
+        }
+        
+        if pwdTextField.textField.text != pwdValidateTextField.textField.text {
+            pwdValidateTextField.showErrorDescription()
+            pwdValidateTextField.showValidationErrorColor()
+        } else {
+            pwdValidateTextField.hideErrorDescription()
+            pwdValidateTextField.hideValidationErrorColor()
+        }
     }
     
-    func addViews() {
+    private func addViews() {
         view.addSubview(mainLabel)
         view.addSubview(emailTextField)
         view.addSubview(pwdTextField)
@@ -66,7 +92,7 @@ class RegisterController: UIViewController {
         view.addSubview(registerButton)
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         mainLabelConstraints()
         emailTextFieldConstraints()
         pwdTextFieldConstraints()
@@ -74,7 +100,7 @@ class RegisterController: UIViewController {
         registerButtonConstraints()
     }
     
-    func mainLabelConstraints() {
+    private func mainLabelConstraints() {
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
         mainLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
         mainLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -82,7 +108,7 @@ class RegisterController: UIViewController {
         mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
-    func emailTextFieldConstraints() {
+    private func emailTextFieldConstraints() {
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         emailTextField.heightAnchor.constraint(equalToConstant: 88).isActive = true
@@ -90,7 +116,7 @@ class RegisterController: UIViewController {
         emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
-    func pwdTextFieldConstraints() {
+    private func pwdTextFieldConstraints() {
         pwdTextField.translatesAutoresizingMaskIntoConstraints = false
         pwdTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         pwdTextField.heightAnchor.constraint(equalToConstant: 88).isActive = true
@@ -98,7 +124,7 @@ class RegisterController: UIViewController {
         pwdTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
-    func pwdValidateTextFieldConstraints() {
+    private func pwdValidateTextFieldConstraints() {
         pwdValidateTextField.translatesAutoresizingMaskIntoConstraints = false
         pwdValidateTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         pwdValidateTextField.heightAnchor.constraint(equalToConstant: 88).isActive = true
@@ -106,7 +132,7 @@ class RegisterController: UIViewController {
         pwdValidateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
     }
     
-    func registerButtonConstraints() {
+    private func registerButtonConstraints() {
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         registerButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
         registerButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
