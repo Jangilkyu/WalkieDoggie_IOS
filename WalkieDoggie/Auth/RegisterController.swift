@@ -52,10 +52,36 @@ class RegisterController: UIViewController {
     }
     
     func configureRegisterButton() {
-        registerButton.button.addTarget(self, action: #selector(handleRegisterButton), for: .touchUpInside)
+        registerButton.button.addTarget(
+            self,
+            action: #selector(handleRegisterButton),
+            for: .touchUpInside)
     }
     
     @objc func handleRegisterButton() {
+        if !emailTextField.textField.isEmail() {
+            emailTextField.showErrorDescription()
+            emailTextField.showValidationErrorColor()
+        } else {
+            emailTextField.hideErrorDescription()
+            emailTextField.hideValidationErrorColor()
+        }
+        
+        if !pwdTextField.textField.isValidPwd() {
+            pwdTextField.showErrorDescription()
+            pwdTextField.showValidationErrorColor()
+        } else {
+            pwdTextField.hideErrorDescription()
+            pwdTextField.hideValidationErrorColor()
+        }
+        
+        if pwdTextField.textField.text != pwdValidateTextField.textField.text {
+            pwdValidateTextField.showErrorDescription()
+            pwdValidateTextField.showValidationErrorColor()
+        } else {
+            pwdValidateTextField.hideErrorDescription()
+            pwdValidateTextField.hideValidationErrorColor()
+        }
     }
     
     func addViews() {
