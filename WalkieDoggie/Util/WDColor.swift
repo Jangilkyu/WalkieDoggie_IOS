@@ -9,11 +9,17 @@ import UIKit
 
 enum WDColor {
     case darkGray
+    case red
+    case blue
     
     var color: UIColor {
         switch self {
             case .darkGray:
                 return UIColor(r: 44, g: 44, b: 44)
+            case .red:
+                return UIColor(r: 255, g: 0, b: 0)
+            case .blue:
+                return UIColor(r: 64, g: 101, b: 247)
         }
     }
 }

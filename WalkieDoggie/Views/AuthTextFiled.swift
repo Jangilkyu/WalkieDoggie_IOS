@@ -44,6 +44,7 @@ class AuthTextField: UIView {
         titleLabel.text = titleText
         textField.placeholder = placeholderText
         descriptionLabel.text = descriptionText
+        setType(type: type)
         
         addViews()
         setConstraints()
@@ -53,21 +54,52 @@ class AuthTextField: UIView {
         return nil
     }
     
-    func addViews() {
+    func showErrorDescription() {
+        descriptionLabel.isHidden = false
+    }
+    
+    func hideErrorDescription() {
+        descriptionLabel.isHidden = true
+    }
+    
+    func showValidationErrorColor() {
+        titleLabel.textColor = WDColor.red.color
+        textField.tintColor = WDColor.red.color
+    }
+    
+    func hideValidationErrorColor() {
+        titleLabel.textColor = WDColor.darkGray.color
+        textField.tintColor = WDColor.blue.color
+    }
+    
+    private func setType(type: AuthTextFieldTypes) {
+        switch type {
+        case .email:
+            textField.keyboardType = .emailAddress
+            textField.textContentType = .emailAddress
+            textField.autocorrectionType = .no
+        case .password:
+            textField.keyboardType = .default
+            textField.isSecureTextEntry = true
+            textField.textContentType = .password
+        }
+    }
+    
+    private func addViews() {
         addSubview(titleLabel)
         addSubview(textField)
         addSubview(textFieldUnderLine)
         addSubview(descriptionLabel)
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         titleLabelConstraints()
         textFieldConstraints()
         textFieldUnderLineConstratins()
         descriptionLabelConstraints()
     }
     
-    func titleLabelConstraints() {
+    private func titleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
@@ -75,7 +107,7 @@ class AuthTextField: UIView {
         titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
     }
     
-    func textFieldConstraints() {
+    private func textFieldConstraints() {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.widthAnchor.constraint(equalTo: widthAnchor, constant: -10).isActive = true
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -83,7 +115,7 @@ class AuthTextField: UIView {
         textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
     }
     
-    func textFieldUnderLineConstratins() {
+    private func textFieldUnderLineConstratins() {
         textFieldUnderLine.translatesAutoresizingMaskIntoConstraints = false
         textFieldUnderLine.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         textFieldUnderLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -91,7 +123,7 @@ class AuthTextField: UIView {
         textFieldUnderLine.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
     }
     
-    func descriptionLabelConstraints() {
+    private func descriptionLabelConstraints() {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -10).isActive = true
         descriptionLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
