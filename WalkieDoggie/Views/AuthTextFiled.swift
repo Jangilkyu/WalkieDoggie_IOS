@@ -25,6 +25,7 @@ class AuthTextField: UIView {
     
     let textField: UITextField = {
         let tf = UITextField()
+        tf.autocapitalizationType = .none
         return tf
     }()
     
