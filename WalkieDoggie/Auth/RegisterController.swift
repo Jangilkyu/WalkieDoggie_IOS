@@ -59,29 +59,39 @@ class RegisterController: UIViewController {
     }
     
     @objc private func handleRegisterButton() {
+        var shouldProceed: Bool = false
+
         if !emailTextField.textField.isEmail() {
             emailTextField.showErrorDescription()
             emailTextField.showValidationErrorColor()
+            shouldProceed = false
         } else {
             emailTextField.hideErrorDescription()
             emailTextField.hideValidationErrorColor()
+            shouldProceed = true
         }
         
         if !pwdTextField.textField.isValidPwd() {
             pwdTextField.showErrorDescription()
             pwdTextField.showValidationErrorColor()
+            shouldProceed = false
         } else {
             pwdTextField.hideErrorDescription()
             pwdTextField.hideValidationErrorColor()
+            shouldProceed = true
         }
         
         if pwdTextField.textField.text != pwdValidateTextField.textField.text {
             pwdValidateTextField.showErrorDescription()
             pwdValidateTextField.showValidationErrorColor()
+            shouldProceed = false
         } else {
             pwdValidateTextField.hideErrorDescription()
             pwdValidateTextField.hideValidationErrorColor()
+            shouldProceed = true
         }
+        
+        guard shouldProceed else { return }
     }
     
     private func addViews() {
