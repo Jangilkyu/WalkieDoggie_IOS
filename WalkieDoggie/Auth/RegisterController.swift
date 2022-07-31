@@ -196,6 +196,7 @@ extension RegisterController: RestProcessorRequestDelegate {
         guard let statusCode = result.response?.httpStatusCode  else { return }
         
         if statusCode == 201 {
+            // MARK: - 회원가입 성공 시
             DispatchQueue.main.async {
                 
             }
