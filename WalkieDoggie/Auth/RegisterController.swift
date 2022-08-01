@@ -9,6 +9,8 @@ import UIKit
 
 class RegisterController: UIViewController {
     
+    var api: RestProcessor!
+    
     let mainLabel: UILabel = {
         let lb = UILabel()
         lb.text = "회원가입"
@@ -44,6 +46,7 @@ class RegisterController: UIViewController {
         setup()
         addViews()
         setConstraints()
+        setConfigureRestProcessor()
     }
     
     private func setup() {
@@ -92,6 +95,29 @@ class RegisterController: UIViewController {
         }
         
         guard shouldProceed else { return }
+        
+        if  let email = emailTextField.textField.text,
+            let pwd = pwdTextField.textField.text {
+
+            api.reqeustHttpHeaders.add(
+                value: "application/json",
+                forKey: "Content-Type"
+            )
+
+            api.httpBodyParameters.add(
+                value: email,
+                forKey: "email"
+            )
+            api.httpBodyParameters.add(
+                value: pwd,
+                forKey: "password"
+            )
+
+            api.makeRequest(
+                toURL: EndPoint.register.url,
+                withHttpMethod: .post
+            )
+        }
     }
     
     private func addViews() {
@@ -108,6 +134,11 @@ class RegisterController: UIViewController {
         pwdTextFieldConstraints()
         pwdValidateTextFieldConstraints()
         registerButtonConstraints()
+    }
+    
+    private func setConfigureRestProcessor() {
+        api = RestProcessor()
+        api.requestDelegate = self
     }
     
     private func mainLabelConstraints() {
@@ -150,4 +181,25 @@ class RegisterController: UIViewController {
         registerButton.topAnchor.constraint(equalTo: pwdValidateTextField.bottomAnchor).isActive = true
     }
 
+}
+
+extension RegisterController: RestProcessorRequestDelegate {
+    func didFailToPrepareReqeust(
+        _ result: RestProcessor.Results
+    ) {
+        print("회원가입에 실패하였습니다.")
+    }
+    
+    func didReceiveResponseFromDataTask(
+        _ result: RestProcessor.Results
+    ) {
+        guard let statusCode = result.response?.httpStatusCode  else { return }
+        
+        if statusCode == 201 {
+            // MARK: - 회원가입 성공 시
+            DispatchQueue.main.async {
+                
+            }
+        }
+    }
 }
