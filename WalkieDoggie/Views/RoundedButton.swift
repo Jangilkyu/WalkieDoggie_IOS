@@ -6,8 +6,34 @@
 //
 
 import UIKit
+import Lottie
 
 class RoundedButton: UIView {
+    
+    enum State {
+        case initial
+        case loading
+        case failure(fallBack: String)
+        case success
+    }
+    
+    var buttonState: State = .initial {
+        didSet {
+            switch self.buttonState {
+                case .loading:
+                button.setTitle("SPINNER", for: .normal)
+            case .failure(let buttonTitle):
+                button.setTitle("FAILURE", for: .normal)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.button.setTitle(buttonTitle, for: .normal)
+                }
+            case .success:
+                    button.setTitle("CHECK", for: .normal)
+                default:
+                    return
+            }
+        }
+    }
     
     let button: UIButton = {
         let btn = UIButton()
