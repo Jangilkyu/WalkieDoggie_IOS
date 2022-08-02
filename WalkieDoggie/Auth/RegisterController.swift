@@ -84,7 +84,7 @@ class RegisterController: UIViewController {
             shouldProceed = true
         }
         
-        if pwdTextField.textField.text != pwdValidateTextField.textField.text {
+        if pwdTextField.textField.text != pwdValidateTextField.textField.text || pwdTextField.textField.text?.count == 0 {
             pwdValidateTextField.showErrorDescription()
             pwdValidateTextField.showValidationErrorColor()
             shouldProceed = false
@@ -95,6 +95,7 @@ class RegisterController: UIViewController {
         }
         
         guard shouldProceed else { return }
+        registerButton.buttonState = .loading
         
         if  let email = emailTextField.textField.text,
             let pwd = pwdTextField.textField.text {
@@ -198,7 +199,12 @@ extension RegisterController: RestProcessorRequestDelegate {
         if statusCode == 201 {
             // MARK: - 회원가입 성공 시
             DispatchQueue.main.async {
-                
+                self.registerButton.buttonState = .success
+            }
+        } else {
+            // MARK: - 회원가입 실패 시
+            DispatchQueue.main.async {
+                self.registerButton.buttonState = .failure(fallBack: "회원가입 하기")
             }
         }
     }
