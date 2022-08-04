@@ -54,6 +54,21 @@ class RoundedButton: UIView {
         setConstraints()
     }
     
+    func playLottie(
+        _ animation: Animation?,
+        toProgress: AnimationProgressTime,
+        loopMode: LottieLoopMode,
+        completion: LottieCompletionBlock? = nil)
+    {
+        lottieView.animation = animation
+        lottieView.play(
+            fromProgress: 0,
+            toProgress: toProgress,
+            loopMode: loopMode,
+            completion: completion
+        )
+    }
+    
     required init?(coder: NSCoder) {
         return nil
     }
