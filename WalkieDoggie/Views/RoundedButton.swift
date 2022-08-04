@@ -50,6 +50,7 @@ class RoundedButton: UIView {
     required init(buttonTItle: String) {
         super.init(frame: .zero)
         button.setTitle(buttonTItle, for: .normal)
+        configureLottie()
         addViews()
         setConstraints()
     }
@@ -71,6 +72,11 @@ class RoundedButton: UIView {
     
     required init?(coder: NSCoder) {
         return nil
+    }
+    
+    private func configureLottie() {
+      lottieView.isHidden = true
+      lottieView.backgroundColor = .white
     }
     
     func addViews() {
