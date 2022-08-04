@@ -45,6 +45,8 @@ class RoundedButton: UIView {
         return btn
     }()
     
+    let lottieView: AnimationView = AnimationView()
+    
     required init(buttonTItle: String) {
         super.init(frame: .zero)
         button.setTitle(buttonTItle, for: .normal)
