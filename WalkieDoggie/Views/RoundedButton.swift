@@ -45,11 +45,28 @@ class RoundedButton: UIView {
         return btn
     }()
     
+    let lottieView: AnimationView = AnimationView()
+    
     required init(buttonTItle: String) {
         super.init(frame: .zero)
         button.setTitle(buttonTItle, for: .normal)
         addViews()
         setConstraints()
+    }
+    
+    func playLottie(
+        _ animation: Animation?,
+        toProgress: AnimationProgressTime,
+        loopMode: LottieLoopMode,
+        completion: LottieCompletionBlock? = nil)
+    {
+        lottieView.animation = animation
+        lottieView.play(
+            fromProgress: 0,
+            toProgress: toProgress,
+            loopMode: loopMode,
+            completion: completion
+        )
     }
     
     required init?(coder: NSCoder) {
