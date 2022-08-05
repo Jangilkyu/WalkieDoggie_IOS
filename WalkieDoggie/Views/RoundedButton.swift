@@ -61,6 +61,7 @@ class RoundedButton: UIView {
         loopMode: LottieLoopMode,
         completion: LottieCompletionBlock? = nil)
     {
+        lottieView.isHidden = false
         lottieView.animation = animation
         lottieView.play(
             fromProgress: 0,
