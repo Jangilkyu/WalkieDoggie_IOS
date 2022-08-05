@@ -50,6 +50,7 @@ class RoundedButton: UIView {
     required init(buttonTItle: String) {
         super.init(frame: .zero)
         button.setTitle(buttonTItle, for: .normal)
+        configureLottie()
         addViews()
         setConstraints()
     }
@@ -73,16 +74,34 @@ class RoundedButton: UIView {
         return nil
     }
     
+    private func configureLottie() {
+      lottieView.isHidden = true
+      lottieView.backgroundColor = .white
+    }
+    
     func addViews() {
         addSubview(button)
+        addSubview(lottieView)
     }
     
     func setConstraints() {
+        buttonConstraints()
+        lottieViewConstraints()
+    }
+    
+    func buttonConstraints() {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.topAnchor.constraint(equalTo: topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         button.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         button.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     }
-
+    
+    private func lottieViewConstraints() {
+      lottieView.translatesAutoresizingMaskIntoConstraints = false
+      lottieView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+      lottieView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+      lottieView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+      lottieView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
 }
