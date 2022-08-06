@@ -25,8 +25,14 @@ class RoundedButton: UIView {
                 playLottie(spinnerAnimation, toProgress: 0.8, loopMode: .loop)
 
             case .failure(let buttonTitle):
-                button.setTitle("FAILURE", for: .normal)
+                let spinnerAnimation = Animation.named("button-failed")
+                playLottie(
+                    spinnerAnimation,
+                    toProgress: 1,
+                    loopMode: .playOnce
+                )
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.lottieView.isHidden = true
                     self.button.setTitle(buttonTitle, for: .normal)
                 }
             case .success(let completion):

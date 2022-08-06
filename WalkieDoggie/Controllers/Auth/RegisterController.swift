@@ -189,7 +189,9 @@ extension RegisterController: RestProcessorRequestDelegate {
     func didFailToPrepareReqeust(
         _ result: RestProcessor.Results
     ) {
-        print("회원가입에 실패하였습니다.")
+        DispatchQueue.main.async {
+            self.registerButton.buttonState = .failure(fallBack: "회원가입 하기")
+        }
     }
     
     func didReceiveResponseFromDataTask(
