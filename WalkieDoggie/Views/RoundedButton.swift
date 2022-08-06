@@ -14,7 +14,7 @@ class RoundedButton: UIView {
         case initial
         case loading
         case failure(fallBack: String)
-        case success
+        case success(completion: LottieCompletionBlock)
     }
     
     var buttonState: State = .initial {
@@ -29,8 +29,14 @@ class RoundedButton: UIView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.button.setTitle(buttonTitle, for: .normal)
                 }
-            case .success:
-                    button.setTitle("CHECK", for: .normal)
+            case .success(let completion):
+                let spinnerAnimation = Animation.named("button-checkmark")
+                playLottie(
+                    spinnerAnimation,
+                    toProgress: 1,
+                    loopMode: .playOnce,
+                    completion: completion
+                )
                 default:
                     return
             }
