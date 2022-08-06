@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class RegisterController: UIViewController {
     
@@ -199,7 +200,11 @@ extension RegisterController: RestProcessorRequestDelegate {
         if statusCode == 201 {
             // MARK: - 회원가입 성공 시
             DispatchQueue.main.async {
-                self.registerButton.buttonState = .success
+                let completion: LottieCompletionBlock = { _ in
+                    let mainVC = MainController()
+                    self.navigationController?.pushViewController(mainVC, animated: true)
+                }
+                self.registerButton.buttonState = .success(completion: completion)
             }
         } else {
             // MARK: - 회원가입 실패 시
