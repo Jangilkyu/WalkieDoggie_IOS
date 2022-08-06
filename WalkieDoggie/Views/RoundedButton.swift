@@ -14,21 +14,35 @@ class RoundedButton: UIView {
         case initial
         case loading
         case failure(fallBack: String)
-        case success
+        case success(completion: LottieCompletionBlock)
     }
     
     var buttonState: State = .initial {
         didSet {
             switch self.buttonState {
                 case .loading:
-                button.setTitle("SPINNER", for: .normal)
+                let spinnerAnimation = Animation.named("button-spinner")
+                playLottie(spinnerAnimation, toProgress: 0.8, loopMode: .loop)
+
             case .failure(let buttonTitle):
-                button.setTitle("FAILURE", for: .normal)
+                let spinnerAnimation = Animation.named("button-failed")
+                playLottie(
+                    spinnerAnimation,
+                    toProgress: 1,
+                    loopMode: .playOnce
+                )
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.lottieView.isHidden = true
                     self.button.setTitle(buttonTitle, for: .normal)
                 }
-            case .success:
-                    button.setTitle("CHECK", for: .normal)
+            case .success(let completion):
+                let spinnerAnimation = Animation.named("button-checkmark")
+                playLottie(
+                    spinnerAnimation,
+                    toProgress: 1,
+                    loopMode: .playOnce,
+                    completion: completion
+                )
                 default:
                     return
             }
@@ -61,6 +75,7 @@ class RoundedButton: UIView {
         loopMode: LottieLoopMode,
         completion: LottieCompletionBlock? = nil)
     {
+        lottieView.isHidden = false
         lottieView.animation = animation
         lottieView.play(
             fromProgress: 0,
