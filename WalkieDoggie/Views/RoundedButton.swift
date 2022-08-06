@@ -21,7 +21,9 @@ class RoundedButton: UIView {
         didSet {
             switch self.buttonState {
                 case .loading:
-                button.setTitle("SPINNER", for: .normal)
+                let spinnerAnimation = Animation.named("button-spinner")
+                playLottie(spinnerAnimation, toProgress: 0.8, loopMode: .loop)
+
             case .failure(let buttonTitle):
                 button.setTitle("FAILURE", for: .normal)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
