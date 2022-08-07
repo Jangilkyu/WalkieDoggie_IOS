@@ -12,5 +12,7 @@ class MainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        
+        navigationItem.setHidesBackButton(true, animated: false)
     }
 }
