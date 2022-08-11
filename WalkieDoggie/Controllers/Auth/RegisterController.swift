@@ -197,22 +197,29 @@ extension RegisterController: RestProcessorRequestDelegate {
     func didReceiveResponseFromDataTask(
         _ result: RestProcessor.Results
     ) {
-        guard let statusCode = result.response?.httpStatusCode  else { return }
+        let responseHandler = ResHandler(result: result)
         
-        if statusCode == 201 {
-            // MARK: - 회원가입 성공 시
-            DispatchQueue.main.async {
-                let completion: LottieCompletionBlock = { _ in
-                    let mainVC = MainController()
-                    self.navigationController?.pushViewController(mainVC, animated: true)
+        switch responseHandler.getResult() {
+            case .created:
+                DispatchQueue.main.async {
+                    let completion: LottieCompletionBlock = { _ in
+                        let mainVC = MainController()
+                        self.navigationController?.pushViewController(mainVC, animated: true)
+                    }
+                    self.registerButton.buttonState = .success(completion: completion)
                 }
-                self.registerButton.buttonState = .success(completion: completion)
-            }
-        } else {
-            // MARK: - 회원가입 실패 시
-            DispatchQueue.main.async {
+            
+            case .duplicateEmail:
+                DispatchQueue.main.async {
+                    self.emailTextField.showErrorDescription("이미 존재하는 이메일 입니다.")
+                    self.registerButton.buttonState = .failure(fallBack: "회원가입 하기")
+                }
+            case .serverError:
+              DispatchQueue.main.async {
                 self.registerButton.buttonState = .failure(fallBack: "회원가입 하기")
-            }
+              }
+        default:
+            return
         }
     }
 }

@@ -55,7 +55,10 @@ class AuthTextField: UIView {
         return nil
     }
     
-    func showErrorDescription() {
+    func showErrorDescription(_ description: String? = nil) {
+        if let unwrappedDescription = description {
+            descriptionLabel.text = unwrappedDescription
+        }
         descriptionLabel.isHidden = false
     }
     
