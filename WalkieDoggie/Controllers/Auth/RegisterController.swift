@@ -79,7 +79,7 @@ class RegisterController: UIViewController {
             pwdTextField.showErrorDescription()
             pwdTextField.showValidationErrorColor()
             shouldProceed = false
-        } else {
+        } else if shouldProceed {
             pwdTextField.hideErrorDescription()
             pwdTextField.hideValidationErrorColor()
             shouldProceed = true
@@ -89,7 +89,7 @@ class RegisterController: UIViewController {
             pwdValidateTextField.showErrorDescription()
             pwdValidateTextField.showValidationErrorColor()
             shouldProceed = false
-        } else {
+        } else if shouldProceed {
             pwdValidateTextField.hideErrorDescription()
             pwdValidateTextField.hideValidationErrorColor()
             shouldProceed = true
