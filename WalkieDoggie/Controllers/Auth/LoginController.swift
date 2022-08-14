@@ -55,21 +55,33 @@ class LoginController: UIViewController {
     }
     
     @objc func handleLoginButton() {
-        if !emailTextField.textField.isEmail() {
-            emailTextField.showErrorDescription()
-            emailTextField.showValidationErrorColor()
-        } else {
+        
+        var shouldProceed: Bool = false
+        
+        if emailTextField.textField.isEmail() {
             emailTextField.hideErrorDescription()
             emailTextField.hideValidationErrorColor()
+            shouldProceed = true
+        } else {
+            emailTextField.showErrorDescription()
+            emailTextField.showValidationErrorColor()
+            shouldProceed = false
         }
         
-        if !pwdTextField.textField.isValidPwd() {
-            pwdTextField.showErrorDescription()
-            pwdTextField.showValidationErrorColor()
-        } else {
+        if  shouldProceed,
+            pwdTextField.textField.isValidPwd() {
             pwdTextField.hideErrorDescription()
             pwdTextField.hideValidationErrorColor()
+            shouldProceed = true
+            
+        } else {
+            pwdTextField.showErrorDescription()
+            pwdTextField.showValidationErrorColor()
+            shouldProceed = false
         }
+
+        guard shouldProceed else { return }
+        
     }
     
     func addViews() {
@@ -125,7 +137,9 @@ extension LoginController: RestProcessorRequestDelegate {
         
     }
     
-    func didReceiveResponseFromDataTask(_ result: RestProcessor.Results) {
-        
+    func didReceiveResponseFromDataTask(
+        _ result: RestProcessor.Results
+    ) {
+        print("A")
     }
 }
