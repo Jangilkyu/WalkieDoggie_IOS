@@ -119,3 +119,13 @@ class LoginController: UIViewController {
         loginButton.topAnchor.constraint(equalTo: pwdTextField.bottomAnchor, constant: 50).isActive = true
     }
 }
+
+extension LoginController: RestProcessorRequestDelegate {
+    func didFailToPrepareReqeust(_ result: RestProcessor.Results) {
+        
+    }
+    
+    func didReceiveResponseFromDataTask(_ result: RestProcessor.Results) {
+        
+    }
+}
