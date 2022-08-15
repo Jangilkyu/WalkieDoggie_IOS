@@ -81,6 +81,31 @@ class LoginController: UIViewController {
         }
 
         guard shouldProceed else { return }
+        loginButton.buttonState = .loading
+        
+        if let email = emailTextField.textField.text,
+           let pwd = pwdTextField.textField.text {
+            let api = RestProcessor()
+            api.requestDelegate = self
+            api.reqeustHttpHeaders.add(
+                value: "application/json",
+                forKey: "Content-Type"
+            )
+            
+            api.httpBodyParameters.add(
+                value: email,
+                forKey: "email"
+            )
+            
+            api.httpBodyParameters.add(
+                value: pwd,
+                forKey: "password"
+            )
+            api.makeRequest(
+                toURL: EndPoint.login.url,
+                withHttpMethod: .post
+            )
+        }
         
     }
     
@@ -140,6 +165,6 @@ extension LoginController: RestProcessorRequestDelegate {
     func didReceiveResponseFromDataTask(
         _ result: RestProcessor.Results
     ) {
-        print("A")
+        debugPrint(result)
     }
 }
