@@ -35,6 +35,15 @@ class LoginController: UIViewController {
     
     let loginButton = RoundedButton(buttonTItle: "로그인 하기")
     
+    let signUpButton: UIButton = {
+      let btn = UIButton()
+      btn.setTitle("회원가입 하기", for: .normal)
+      btn.titleLabel?.font = WDFont.Black.of(size: 13)
+      btn.setTitleColor(WDColor.darkGray.color, for: .normal)
+      
+      return btn
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -45,6 +54,7 @@ class LoginController: UIViewController {
     func setup() {
         view.backgroundColor = .white
         configureLoginButton()
+        configureSignUpButton()
     }
     
     func configureLoginButton() {
@@ -107,14 +117,30 @@ class LoginController: UIViewController {
                 withHttpMethod: .post
             )
         }
-        
     }
+    
+    func configureSignUpButton() {
+        signUpButton.addTarget(
+          self,
+          action: #selector(handleSignUpButton),
+          for: .touchUpInside)
+    }
+    
+    @objc private func handleSignUpButton(){
+        DispatchQueue.main.async {
+            let registerVC = RegisterController()
+            self.navigationController?.pushViewController(registerVC, animated: true)
+        }
+    }
+    
+    
     
     func addViews() {
         view.addSubview(mainLabel)
         view.addSubview(emailTextField)
         view.addSubview(pwdTextField)
         view.addSubview(loginButton)
+        view.addSubview(signUpButton)
     }
     
     // Constraints
@@ -123,6 +149,7 @@ class LoginController: UIViewController {
         emailTextFieldConstraints()
         pwdTextFieldConstraints()
         loginButtonConstraints()
+        signUpButtonConstraints()
     }
     
     func mainLabelConstraints() {
@@ -155,6 +182,12 @@ class LoginController: UIViewController {
         loginButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loginButton.topAnchor.constraint(equalTo: pwdTextField.bottomAnchor, constant: 50).isActive = true
+    }
+    
+    private func signUpButtonConstraints() {
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 90).isActive = true
     }
 }
 
