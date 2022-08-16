@@ -127,7 +127,10 @@ class LoginController: UIViewController {
     }
     
     @objc private func handleSignUpButton(){
-          debugPrint("====== 회원가입 하기 버튼 이벤트 ======")
+        DispatchQueue.main.async {
+            let registerVC = RegisterController()
+            self.navigationController?.pushViewController(registerVC, animated: true)
+        }
     }
     
     
