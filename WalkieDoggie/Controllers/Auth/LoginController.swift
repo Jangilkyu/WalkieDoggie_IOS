@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class LoginController: UIViewController {
     
@@ -170,6 +171,21 @@ extension LoginController: RestProcessorRequestDelegate {
     func didReceiveResponseFromDataTask(
         _ result: RestProcessor.Results
     ) {
+        let responseHandler = ResHandler(result: result)
+        
+        switch responseHandler.getResult() {
+            case .ok:
+                DispatchQueue.main.async {
+                    let completion: LottieCompletionBlock = { _ in
+                        let mainVC = MainController()
+                        self.navigationController?.pushViewController(mainVC, animated: true)
+                    }
+                    self.loginButton.buttonState = .success(completion: completion)
+                }
+            
+        default:
+            return
+        }
         
     }
 }
