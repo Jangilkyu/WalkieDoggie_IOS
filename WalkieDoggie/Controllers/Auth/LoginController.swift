@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class LoginController: UIViewController {
     
@@ -158,13 +159,33 @@ class LoginController: UIViewController {
 }
 
 extension LoginController: RestProcessorRequestDelegate {
-    func didFailToPrepareReqeust(_ result: RestProcessor.Results) {
-        
+    
+    func didFailToPrepareReqeust(
+        _ result: RestProcessor.Results
+    ) {
+        DispatchQueue.main.async {
+            self.loginButton.buttonState = .failure(fallBack: "로그인 하기")
+        }
     }
     
     func didReceiveResponseFromDataTask(
         _ result: RestProcessor.Results
     ) {
-        debugPrint(result)
+        let responseHandler = ResHandler(result: result)
+        
+        switch responseHandler.getResult() {
+            case .ok:
+                DispatchQueue.main.async {
+                    let completion: LottieCompletionBlock = { _ in
+                        let mainVC = MainController()
+                        self.navigationController?.pushViewController(mainVC, animated: true)
+                    }
+                    self.loginButton.buttonState = .success(completion: completion)
+                }
+            
+        default:
+            return
+        }
+        
     }
 }
