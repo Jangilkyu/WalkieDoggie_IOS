@@ -210,6 +210,9 @@ extension LoginController: RestProcessorRequestDelegate {
         case .ok(let headers):
             guard let accessToken = headers.value(forKey: "Accesstoken"),
                   let refreshToken = headers.value(forKey: "Refreshtoken") else { return }
+
+            LS.setAccessToken(accessToken)
+            LS.setRefreshToken(refreshToken)
             
                 DispatchQueue.main.async {
                     let completion: LottieCompletionBlock = { _ in
