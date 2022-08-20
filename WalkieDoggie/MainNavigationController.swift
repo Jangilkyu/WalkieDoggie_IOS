@@ -10,5 +10,11 @@ import UIKit
 class MainNavigationController: UINavigationController {
     override func viewDidLoad() {
       super.viewDidLoad()
+        
+        if let _ = LS.getAccessToken() {
+            viewControllers = [MainController()]
+        } else {
+            viewControllers = [LoginController()]
+        }
     }
 }
