@@ -10,7 +10,7 @@ import Foundation
 class ResHandler {
     enum resultTypes {
         case created
-        case ok
+        case ok(RestProcessor.RestEntity)
         case clientError
         case serverError
         case duplicateEmail
@@ -28,7 +28,8 @@ class ResHandler {
         if statusCode == 201 {
             return .created
         } else if statusCode == 200 {
-            return .ok
+            guard let headers = result.response?.headers else { return nil}
+            return .ok(headers)
         } else if statusCode > 399, statusCode < 500 {
             return .clientError
         } else {

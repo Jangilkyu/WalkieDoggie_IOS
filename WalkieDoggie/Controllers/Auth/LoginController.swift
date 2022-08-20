@@ -207,7 +207,10 @@ extension LoginController: RestProcessorRequestDelegate {
         let responseHandler = ResHandler(result: result)
         
         switch responseHandler.getResult() {
-            case .ok:
+        case .ok(let headers):
+            guard let accessToken = headers.value(forKey: "Accesstoken"),
+                  let refreshToken = headers.value(forKey: "Refreshtoken") else { return }
+            
                 DispatchQueue.main.async {
                     let completion: LottieCompletionBlock = { _ in
                         let mainVC = MainController()
@@ -219,6 +222,5 @@ extension LoginController: RestProcessorRequestDelegate {
         default:
             return
         }
-        
     }
 }
