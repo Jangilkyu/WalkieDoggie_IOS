@@ -221,6 +221,11 @@ extension LoginController: RestProcessorRequestDelegate {
                     }
                     self.loginButton.buttonState = .success(completion: completion)
                 }
+        case .clientError:
+            DispatchQueue.main.async {
+                self.loginButton.buttonState = .failure(fallBack: "로그인 하기")
+            }
+
             
         default:
             return
