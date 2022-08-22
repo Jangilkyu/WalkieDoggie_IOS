@@ -12,7 +12,7 @@ class MainNavigationController: UINavigationController {
       super.viewDidLoad()
         
         if let _ = LS.getAccessToken() {
-            viewControllers = [MainController()]
+            viewControllers = [CustomTabBarController()]
         } else {
             viewControllers = [LoginController()]
         }
