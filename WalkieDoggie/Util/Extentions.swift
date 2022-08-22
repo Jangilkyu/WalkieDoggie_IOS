@@ -32,3 +32,22 @@ extension UITextField {
         return self.text?.isValidPwd() ?? false
     }
 }
+
+extension UIImage {
+        func resized(to target: CGSize) -> UIImage {
+            // 비율 계산
+            let ratio = min(target.height / size.height, target.width / size.width)
+            print(ratio)
+            
+            // 새로운 사이즈
+            let new = CGSize(width: size.width * ratio, height: size.height * ratio)
+            let renderer = UIGraphicsImageRenderer(size: new)
+            return renderer.image { _ in
+                self.draw(in: CGRect(origin: .zero, size: new))
+            }
+    }
+    
+    func changeColor(to color: UIColor) -> UIImage {
+        return self.withRenderingMode(.alwaysOriginal).withTintColor(color)
+    }
+}
