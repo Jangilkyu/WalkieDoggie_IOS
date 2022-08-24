@@ -17,6 +17,7 @@ class CustomTabBarController: UITabBarController,UITabBarControllerDelegate{
     // MARK: - init
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.setHidesBackButton(true, animated: false)
         setup()
     }
     
@@ -27,6 +28,7 @@ class CustomTabBarController: UITabBarController,UITabBarControllerDelegate{
     
     // MARK: - setup
     private func setup() {
+        
         configureMainController()
         configureProfileController()
         setViewControllers([
