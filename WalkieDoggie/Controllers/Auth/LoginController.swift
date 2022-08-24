@@ -216,7 +216,7 @@ extension LoginController: RestProcessorRequestDelegate {
             
                 DispatchQueue.main.async {
                     let completion: LottieCompletionBlock = { _ in
-                        let mainVC = MainController()
+                        let mainVC = CustomTabBarController()
                         self.navigationController?.pushViewController(mainVC, animated: true)
                     }
                     self.loginButton.buttonState = .success(completion: completion)
