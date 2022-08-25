@@ -8,11 +8,25 @@
 import UIKit
 
 class MainController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
-        
         navigationItem.setHidesBackButton(true, animated: false)
+
+        setup()
+    }
+    
+    private func setup() {
+        view.backgroundColor = .blue
+        addViews()
+        addConstraints()
+    }
+    
+    private func addViews() {
+        
+    }
+    
+    private func addConstraints() {
+        
     }
 }
