@@ -17,16 +17,16 @@ class MainController: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         addViews()
-        addConstraints()
+        setConstraints()
     }
     
     private func addViews() {
         
     }
     
-    private func addConstraints() {
+    private func setConstraints() {
         
     }
 }
