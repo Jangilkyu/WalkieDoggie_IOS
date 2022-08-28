@@ -7,6 +7,7 @@
 
 import UIKit
 
+let mainCellId = "mainCellId"
 class MainController: UIViewController {
     
     let titleLabel: UILabel = {
@@ -29,8 +30,16 @@ class MainController: UIViewController {
         super.viewDidLoad()
         navigationItem.setHidesBackButton(true, animated: false)
         setup()
+        configureCollectionView()
     }
-    
+
+    private func configureCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(
+            MainCell.self,
+            forCellWithReuseIdentifier: mainCellId)
+    }
     private func setup() {
         view.backgroundColor = .white
         addViews()
@@ -63,3 +72,37 @@ class MainController: UIViewController {
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
     }
 }
+
+extension MainController:
+    UICollectionViewDelegate {
+    
+}
+
+extension MainController:
+    UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return 5
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: mainCellId,
+            for: indexPath) as? MainCell else { return UICollectionViewCell() }
+        
+        return cell
+    }
+}
+
+extension MainController:
+    UICollectionViewDelegateFlowLayout {
+    
+}
+
+
