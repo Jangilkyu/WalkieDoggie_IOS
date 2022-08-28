@@ -16,10 +16,18 @@ class MainController: UIViewController {
        return lb
     }()
     
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout)
+        cv.backgroundColor = .systemBlue
+        return cv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.setHidesBackButton(true, animated: false)
-
         setup()
     }
     
@@ -31,10 +39,12 @@ class MainController: UIViewController {
     
     private func addViews() {
         view.addSubview(titleLabel)
+        view.addSubview(collectionView)
     }
     
     private func setConstraints() {
         titleLabelConstraints()
+        collectionViewConstraints()
     }
     
     private func titleLabelConstraints() {
@@ -43,5 +53,13 @@ class MainController: UIViewController {
         titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+    }
+    
+    private func collectionViewConstraints() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
     }
 }
