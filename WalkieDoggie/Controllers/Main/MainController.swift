@@ -22,7 +22,6 @@ class MainController: UIViewController {
         let cv = UICollectionView(
             frame: .zero,
             collectionViewLayout: layout)
-        cv.backgroundColor = .systemBlue
         return cv
     }()
     

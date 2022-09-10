@@ -12,7 +12,6 @@ class MainCell: UICollectionViewCell {
     let mainImageView: UIImageView = {
         let image = UIImage(named: "dorosi")
         let iv = UIImageView(image: image)
-        iv.backgroundColor = .white
         iv.layer.cornerRadius = 10
         return iv
     }()
@@ -22,8 +21,6 @@ class MainCell: UICollectionViewCell {
         lb.text = "도로시 지켜줄게"
         lb.font = WDFont.Medium.of(size: 23)
         lb.textAlignment = .left
-        lb.backgroundColor = .purple
-        
         return lb
     }()
     
@@ -32,7 +29,6 @@ class MainCell: UICollectionViewCell {
         lb.text = "실내청소 / 산책 / 목욕  / 놀이 / 입양 사진 촬영"
         lb.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         lb.textAlignment = .left
-        lb.backgroundColor = .brown
         lb.numberOfLines = 2
         
         return lb
@@ -50,7 +46,6 @@ class MainCell: UICollectionViewCell {
         lb.text = "서울시 수정동 가나다로 58334-1번지 3층 (스타벅스 옆 건물)"
         lb.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         lb.textAlignment = .left
-        lb.backgroundColor = .orange
         lb.numberOfLines = 2
         return lb
     }()
@@ -58,8 +53,6 @@ class MainCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        backgroundColor = .gray
-        layer.cornerRadius = 10
     }
     
     required init?(coder: NSCoder) {
