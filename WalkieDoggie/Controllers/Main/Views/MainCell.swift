@@ -53,8 +53,6 @@ class MainCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        backgroundColor = .gray
-        layer.cornerRadius = 10
     }
     
     required init?(coder: NSCoder) {
