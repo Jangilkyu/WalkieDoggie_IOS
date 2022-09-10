@@ -22,6 +22,7 @@ class MainController: UIViewController {
         let cv = UICollectionView(
             frame: .zero,
             collectionViewLayout: layout)
+        cv.showsVerticalScrollIndicator = false
         return cv
     }()
     
