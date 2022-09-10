@@ -49,6 +49,12 @@ class MainCell: UICollectionViewCell {
         lb.numberOfLines = 2
         return lb
     }()
+    
+    let mainHoriLine: UIView = {
+        let line = UIView()
+        line.backgroundColor = WDColor.lightGray.color
+        return line
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,6 +76,7 @@ class MainCell: UICollectionViewCell {
         addSubview(mainSubTitleLabel)
         addSubview(mainDistanceLabel)
         addSubview(mainAddressLabel)
+        addSubview(mainHoriLine)
     }
     
     private func setConstraints() {
@@ -78,6 +85,7 @@ class MainCell: UICollectionViewCell {
         mainSubTitleLabelConstraints()
         mainDistanceLabelConstraints()
         mainAddressLabelConstraints()
+        mainHoriLineConstraints()
     }
     
     private func mainImageViewConstraints() {
@@ -113,5 +121,13 @@ class MainCell: UICollectionViewCell {
         mainAddressLabel.topAnchor.constraint(equalTo: mainDistanceLabel.bottomAnchor, constant:  10).isActive = true
         mainAddressLabel.leadingAnchor.constraint(equalTo: mainImageView.trailingAnchor, constant: 10).isActive = true
         mainAddressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+    }
+    
+    private func mainHoriLineConstraints() {
+        mainHoriLine.translatesAutoresizingMaskIntoConstraints = false
+        mainHoriLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        mainHoriLine.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        mainHoriLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+        mainHoriLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
     }
 }
