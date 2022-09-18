@@ -117,7 +117,8 @@ class RegisterController: UIViewController {
 
             api.makeRequest(
                 toURL: EndPoint.register.url,
-                withHttpMethod: .post
+                withHttpMethod: .post,
+                usage: .register
             )
         }
     }
@@ -187,7 +188,8 @@ class RegisterController: UIViewController {
 
 extension RegisterController: RestProcessorRequestDelegate {
     func didFailToPrepareReqeust(
-        _ result: RestProcessor.Results
+        _ result: RestProcessor.Results,
+        _ usage: EndPoint
     ) {
         DispatchQueue.main.async {
             self.registerButton.buttonState = .failure(fallBack: "회원가입 하기")
@@ -195,7 +197,8 @@ extension RegisterController: RestProcessorRequestDelegate {
     }
     
     func didReceiveResponseFromDataTask(
-        _ result: RestProcessor.Results
+        _ result: RestProcessor.Results,
+        _ usage: EndPoint
     ) {
         let responseHandler = ResHandler(result: result)
         
