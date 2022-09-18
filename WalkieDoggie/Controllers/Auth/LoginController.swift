@@ -114,7 +114,8 @@ class LoginController: UIViewController {
             )
             api.makeRequest(
                 toURL: EndPoint.login.url,
-                withHttpMethod: .post
+                withHttpMethod: .post,
+                usage: .login
             )
         }
     }
@@ -194,7 +195,8 @@ class LoginController: UIViewController {
 extension LoginController: RestProcessorRequestDelegate {
     
     func didFailToPrepareReqeust(
-        _ result: RestProcessor.Results
+        _ result: RestProcessor.Results,
+        _ usage: EndPoint
     ) {
         DispatchQueue.main.async {
             self.loginButton.buttonState = .failure(fallBack: "로그인 하기")
@@ -202,7 +204,8 @@ extension LoginController: RestProcessorRequestDelegate {
     }
     
     func didReceiveResponseFromDataTask(
-        _ result: RestProcessor.Results
+        _ result: RestProcessor.Results,
+        _ usage: EndPoint
     ) {
         let responseHandler = ResHandler(result: result)
         
