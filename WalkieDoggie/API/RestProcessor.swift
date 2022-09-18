@@ -8,8 +8,14 @@
 import Foundation
 
 protocol RestProcessorRequestDelegate: AnyObject {
-    func didFailToPrepareReqeust(_ result: RestProcessor.Results)
-    func didReceiveResponseFromDataTask(_ result: RestProcessor.Results)
+    func didFailToPrepareReqeust(
+      _ result: RestProcessor.Results,
+      _ usage: EndPoint
+    )
+    func didReceiveResponseFromDataTask(
+      _ result: RestProcessor.Results,
+      _ usage: EndPoint
+    )
 }
 
 class RestProcessor {
@@ -50,7 +56,8 @@ class RestProcessor {
     
     func makeRequest(
         toURL url: URL,
-        withHttpMethod httpMethod: HttpMethod
+        withHttpMethod httpMethod: HttpMethod,
+        usage: EndPoint
     ) {
         let targetURL = self.addURLQueryParameters(toURL: url)
         let httpBody = (httpMethod == .get)
@@ -65,7 +72,7 @@ class RestProcessor {
             let error = Results(withError: CustomError.failedToCreateRequest)
             
             /// delegate error call back
-            requestDelegate?.didFailToPrepareReqeust(error)
+            requestDelegate?.didFailToPrepareReqeust(error, usage)
             return
         }
         
@@ -76,7 +83,7 @@ class RestProcessor {
                     response: Response(fromURLResponse: response),
                     error: error)
                 /// delegate success call back
-                self.requestDelegate?.didReceiveResponseFromDataTask(result)
+                self.requestDelegate?.didReceiveResponseFromDataTask(result, usage)
             }
         task.resume()
     }
