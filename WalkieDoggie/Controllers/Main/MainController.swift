@@ -79,6 +79,8 @@ extension MainController:
       _ collectionView: UICollectionView,
       didSelectItemAt indexPath: IndexPath
   ) {
+    let view = CenterDetailsController()
+    navigationController?.pushViewController(view, animated: true)
   }
 }
 
