@@ -37,6 +37,12 @@ class MainController: UIViewController {
     configureCollectionView()
   }
   
+  override func loadView() {
+    super.loadView()
+    api = RestProcessor()
+    api.requestDelegate = self
+  }
+  
   private func configureCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
@@ -121,4 +127,17 @@ extension MainController:
     }
 }
 
-
+extension MainController:
+  RestProcessorRequestDelegate {
+  func didFailToPrepareReqeust(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+  }
+  
+  func didReceiveResponseFromDataTask(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+  }
+}
