@@ -10,6 +10,10 @@ import UIKit
 let mainCellId = "mainCellId"
 class MainController: UIViewController {
   
+  var centers: Centers!
+  var resHandler: ResHandler!
+  var api: RestProcessor!
+  
   let titleLabel: UILabel = {
     let lb = UILabel()
     lb.text = "가까운 유기견 센터 목록"
