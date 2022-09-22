@@ -10,6 +10,10 @@ import UIKit
 let mainCellId = "mainCellId"
 class MainController: UIViewController {
   
+  var centers: Centers!
+  var resHandler: ResHandler!
+  var api: RestProcessor!
+  
   let titleLabel: UILabel = {
     let lb = UILabel()
     lb.text = "가까운 유기견 센터 목록"
@@ -31,6 +35,12 @@ class MainController: UIViewController {
     navigationItem.setHidesBackButton(true, animated: false)
     setup()
     configureCollectionView()
+  }
+  
+  override func loadView() {
+    super.loadView()
+    api = RestProcessor()
+    api.requestDelegate = self
   }
   
   private func configureCollectionView() {
@@ -117,4 +127,17 @@ extension MainController:
     }
 }
 
-
+extension MainController:
+  RestProcessorRequestDelegate {
+  func didFailToPrepareReqeust(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+  }
+  
+  func didReceiveResponseFromDataTask(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+  }
+}
