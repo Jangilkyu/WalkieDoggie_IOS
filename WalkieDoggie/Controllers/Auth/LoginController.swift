@@ -210,7 +210,7 @@ extension LoginController: RestProcessorRequestDelegate {
         let responseHandler = ResHandler(result: result)
         
         switch responseHandler.getResult() {
-        case .ok(let headers):
+        case .ok(let headers, _):
             guard let accessToken = headers.value(forKey: "Accesstoken"),
                   let refreshToken = headers.value(forKey: "Refreshtoken") else { return }
 

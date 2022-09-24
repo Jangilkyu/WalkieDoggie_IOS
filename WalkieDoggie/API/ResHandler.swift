@@ -10,7 +10,7 @@ import Foundation
 class ResHandler {
     enum resultTypes {
         case created
-        case ok(RestProcessor.RestEntity)
+        case ok(RestProcessor.RestEntity, Data?)
         case clientError
         case serverError
         case duplicateEmail
@@ -38,7 +38,8 @@ class ResHandler {
             return .created
         } else if statusCode == 200 {
             guard let headers = res.response?.headers else { return nil}
-            return .ok(headers)
+            let data = res.data
+            return .ok(headers, data)
         } else if statusCode == 401 { // unauthorized
           guard let msg = getMsgFromBody(data: res.data) else { return .serverError }
           return msg.contains("access token expired") ? .accessTokenExpired : .unauthorized
