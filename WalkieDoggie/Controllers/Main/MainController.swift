@@ -82,6 +82,19 @@ class MainController: UIViewController {
     collectionViewConstraints()
   }
   
+  private func refreshAccessToken() {
+    api.reqeustHttpHeaders.add(
+      value: "application/json",
+      forKey: "Content-Type")
+    api.reqeustHttpHeaders.add(
+        value: LS.getRefreshToken() ?? "",
+      forKey: "refreshtoken")
+    api.makeRequest(
+      toURL: EndPoint.refresh.url,
+      withHttpMethod: .get,
+      usage: .refresh)
+  }
+  
   private func titleLabelConstraints() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9).isActive = true
@@ -165,8 +178,22 @@ extension MainController:
               self.collectionView.reloadData()
           }
         }
+      case .accessTokenExpired:
+        refreshAccessToken()
+        
       default:
           return
+      }
+    } else if (usage == .refresh){
+      switch resHandler.getResult(result) {
+       case .ok(let headers, _):
+        guard let accessToken = headers.value(forKey: "Accesstoken"),
+              let refreshToken = headers.value(forKey: "Refreshtoken") else { return }
+        LS.setAccessToken(accessToken)
+        LS.setRefreshToken(refreshToken)
+        getCenters()
+      default:
+        return
       }
     }
   }
