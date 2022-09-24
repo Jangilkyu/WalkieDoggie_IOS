@@ -129,7 +129,8 @@ extension MainController:
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return 5
+    guard let centers = self.centers else { return 0 }
+    return centers.getNumberOfCenters()
   }
   
   func collectionView(
@@ -141,6 +142,13 @@ extension MainController:
       withReuseIdentifier: mainCellId,
       for: indexPath) as? MainCell else { return UICollectionViewCell() }
     
+    if let centers = self.centers {
+        let center = centers.getOneCenter(at: indexPath)
+        cell.mainTitleLabel.text = center.name
+        cell.mainSubTitleLabel.text = center.subtitle
+        cell.mainDistanceLabel.text = center.distance
+        cell.mainAddressLabel.text = center.address
+    }
     return cell
   }
 }
