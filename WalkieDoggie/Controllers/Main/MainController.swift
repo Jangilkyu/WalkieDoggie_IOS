@@ -41,6 +41,21 @@ class MainController: UIViewController {
     super.loadView()
     api = RestProcessor()
     api.requestDelegate = self
+    getCenters()
+  }
+  
+  func getCenters() {
+    api.reqeustHttpHeaders.add(
+      value: "application/json",
+      forKey: "Content-Type"
+    )
+    api.reqeustHttpHeaders.add(
+      value: "Bearer \(LS.getAccessToken()!)",
+      forKey: "authorization")
+    api.makeRequest(
+      toURL: EndPoint.centers.url,
+      withHttpMethod: .get,
+      usage: .centers)
   }
   
   private func configureCollectionView() {
