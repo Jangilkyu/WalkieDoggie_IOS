@@ -168,6 +168,17 @@ extension MainController:
       default:
           return
       }
+    } else if (usage == .refresh){
+      switch resHandler.getResult(result) {
+      case .ok(let headers, _):
+        guard let accessToken = headers.value(forKey: "AccessToken"),
+              let refreshToken = headers.value(forKey: "RefreshToken") else { return }
+        LS.setAccessToken(accessToken)
+        LS.setRefreshToken(refreshToken)
+        getCenters()
+      default:
+        return
+      }
     }
   }
 }
