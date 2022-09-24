@@ -154,5 +154,20 @@ extension MainController:
     _ result: RestProcessor.Results,
     _ usage: EndPoint
   ) {
+    resHandler = ResHandler(result: result)
+    if (usage == .centers) {
+      switch resHandler.getResult() {
+      case .ok(_, let data):
+        if let data = data,
+           let decoded = try? JSONDecoder().decode([Center].self, from: data) {
+          centers = Centers(decoded)
+          DispatchQueue.main.async {
+              self.collectionView.reloadData()
+          }
+        }
+      default:
+          return
+      }
+    }
   }
 }
