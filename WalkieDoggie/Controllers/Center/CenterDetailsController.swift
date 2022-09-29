@@ -9,6 +9,7 @@ import UIKit
 
 class CenterDetailsController: UIViewController {
   
+  fileprivate let descriptionCellId = "descriptionCellId"
   fileprivate let buttonCellId = "buttonCellId"
   fileprivate let animalInfoCellId = "animalInfoCellId"
   
@@ -31,6 +32,10 @@ class CenterDetailsController: UIViewController {
   private func configureCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
+    
+    collectionView.register(
+      CenterDtDescriptionCell.self,
+      forCellWithReuseIdentifier: descriptionCellId)
     
     // Button
     collectionView.register(
@@ -81,11 +86,19 @@ extension CenterDetailsController: UICollectionViewDataSource {
     var cell: UICollectionViewCell!
     switch indexPath.item {
       
+    // DescriptionCell
     case 0:
+      cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: descriptionCellId,
+        for: indexPath)
+    // Button Cell
+    case 1:
       guard let buttonCell = collectionView.dequeueReusableCell(
         withReuseIdentifier: buttonCellId,
         for: indexPath) as? CenterDtBtuttonCell else { return UICollectionViewCell() }
       cell = buttonCell
+      
+    // animalInfoCell
     default:
       cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: animalInfoCellId,
