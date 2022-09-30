@@ -9,6 +9,7 @@ import UIKit
 
 class CenterDetailsController: UIViewController {
   
+  fileprivate let centerDtheaderId = "centerDtheaderId"
   fileprivate let descriptionCellId = "descriptionCellId"
   fileprivate let buttonCellId = "buttonCellId"
   fileprivate let animalInfoCellId = "animalInfoCellId"
@@ -34,13 +35,19 @@ class CenterDetailsController: UIViewController {
     collectionView.dataSource = self
     
     collectionView.register(
+      CenterDtHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: centerDtheaderId)
+    
+    // Center Info Cell
+    collectionView.register(
       CenterDtDescriptionCell.self,
       forCellWithReuseIdentifier: descriptionCellId)
     
     // Button
     collectionView.register(
       CenterDtBtuttonCell.self,
-      forCellWithReuseIdentifier: "buttonCellId")
+      forCellWithReuseIdentifier: buttonCellId)
     
     // body
     collectionView.register(
@@ -76,7 +83,7 @@ extension CenterDetailsController: UICollectionViewDataSource {
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return 5
+    return 6
   }
   
   func collectionView(
@@ -109,8 +116,14 @@ extension CenterDetailsController: UICollectionViewDataSource {
 }
 
 extension CenterDetailsController: UICollectionViewDelegateFlowLayout {
-  
-  
+  // Header
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return CGSize(width: view.frame.width, height: 200)
+  }
   
   // body
   func collectionView(
