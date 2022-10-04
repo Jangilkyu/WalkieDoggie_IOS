@@ -103,6 +103,7 @@ extension CenterDetailsController: UICollectionViewDataSource {
       guard let buttonCell = collectionView.dequeueReusableCell(
         withReuseIdentifier: buttonCellId,
         for: indexPath) as? CenterDtBtuttonCell else { return UICollectionViewCell() }
+      buttonCell.delegate = self
       cell = buttonCell
       
     // animalInfoCell
@@ -132,5 +133,13 @@ extension CenterDetailsController: UICollectionViewDelegateFlowLayout {
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
     return CGSize(width: view.frame.width - 30 , height: 150)
+  }
+}
+
+extension CenterDetailsController: CenterDtButtonCellDelegate {
+  func didSelectButton(_ button: UIButton) {
+    if button.titleLabel?.text == "봉사활동 신청하기" {
+      print("봉사활동 신청하기 버튼 눌림")
+    }
   }
 }
