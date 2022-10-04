@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol CenterDtButtonCellDelegate: AnyObject {
+  func didSelectButton(_ button: UIButton)
+}
 
 class CenterDtBtuttonCell: UICollectionViewCell {
+  
+  weak var delegate: CenterDtButtonCellDelegate?
   
   let centerButton: UIButton = {
     let btn = UIButton(type: .custom)
@@ -21,7 +26,6 @@ class CenterDtBtuttonCell: UICollectionViewCell {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .systemOrange
     setup()
   }
 
@@ -32,6 +36,7 @@ class CenterDtBtuttonCell: UICollectionViewCell {
   private func setup() {
     addViews()
     setConstraints()
+    configureMainButton()
   }
   
   private func addViews() {
@@ -40,6 +45,18 @@ class CenterDtBtuttonCell: UICollectionViewCell {
   
   private func setConstraints() {
     centerButtonConstraints()
+  }
+  
+  private func configureMainButton() {
+    centerButton.addTarget(
+      self,
+      action: #selector(handleCenterButton),
+      for: .touchUpInside
+    )
+  }
+  
+  @objc func handleCenterButton(button: UIButton) {
+    delegate?.didSelectButton(button)
   }
   
   private func centerButtonConstraints() {
