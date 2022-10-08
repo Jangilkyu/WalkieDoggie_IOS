@@ -18,7 +18,7 @@ class CenterDetailsController: UIViewController {
   
   let collectionView = UICollectionView(
     frame: .zero,
-    collectionViewLayout: UICollectionViewFlowLayout())
+    collectionViewLayout: CenterDtStretchyLayout())
   
   override func viewDidLoad() {
     super.viewDidLoad()
