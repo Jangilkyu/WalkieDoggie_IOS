@@ -144,6 +144,15 @@ extension CenterDetailsController: UICollectionViewDelegateFlowLayout {
     return CGSize(width: view.frame.width, height: 200)
   }
   
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+  }
+
+  
   // body
   func collectionView(
     _ collectionView: UICollectionView,
