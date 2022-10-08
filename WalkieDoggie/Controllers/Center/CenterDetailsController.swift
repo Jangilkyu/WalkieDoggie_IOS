@@ -9,6 +9,8 @@ import UIKit
 
 class CenterDetailsController: UIViewController {
   
+  var headerView: CenterDtHeaderView!
+  
   fileprivate let centerDtheaderId = "centerDtheaderId"
   fileprivate let descriptionCellId = "descriptionCellId"
   fileprivate let buttonCellId = "buttonCellId"
@@ -16,7 +18,7 @@ class CenterDetailsController: UIViewController {
   
   let collectionView = UICollectionView(
     frame: .zero,
-    collectionViewLayout: UICollectionViewFlowLayout())
+    collectionViewLayout: CenterDtStretchyLayout())
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -79,6 +81,22 @@ extension CenterDetailsController: UICollectionViewDelegate {
 }
 
 extension CenterDetailsController: UICollectionViewDataSource {
+  
+  // Header
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard let view = collectionView.dequeueReusableSupplementaryView(
+      ofKind: kind,
+      withReuseIdentifier: centerDtheaderId,
+      for: indexPath
+    ) as? CenterDtHeaderView else { return UICollectionReusableView() }
+    headerView = view
+    return headerView
+  }
+  
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
@@ -125,6 +143,15 @@ extension CenterDetailsController: UICollectionViewDelegateFlowLayout {
   ) -> CGSize {
     return CGSize(width: view.frame.width, height: 200)
   }
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+  }
+
   
   // body
   func collectionView(
