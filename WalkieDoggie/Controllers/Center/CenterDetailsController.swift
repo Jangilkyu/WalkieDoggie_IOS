@@ -9,6 +9,8 @@ import UIKit
 
 class CenterDetailsController: UIViewController {
   
+  var headerView: CenterDtHeaderView!
+  
   fileprivate let centerDtheaderId = "centerDtheaderId"
   fileprivate let descriptionCellId = "descriptionCellId"
   fileprivate let buttonCellId = "buttonCellId"
@@ -79,6 +81,22 @@ extension CenterDetailsController: UICollectionViewDelegate {
 }
 
 extension CenterDetailsController: UICollectionViewDataSource {
+  
+  // Header
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard let view = collectionView.dequeueReusableSupplementaryView(
+      ofKind: kind,
+      withReuseIdentifier: centerDtheaderId,
+      for: indexPath
+    ) as? CenterDtHeaderView else { return UICollectionReusableView() }
+    headerView = view
+    return headerView
+  }
+  
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
