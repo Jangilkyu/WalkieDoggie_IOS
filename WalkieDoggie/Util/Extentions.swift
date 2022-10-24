@@ -37,7 +37,6 @@ extension UIImage {
         func resized(to target: CGSize) -> UIImage {
             // 비율 계산
             let ratio = min(target.height / size.height, target.width / size.width)
-            print(ratio)
             
             // 새로운 사이즈
             let new = CGSize(width: size.width * ratio, height: size.height * ratio)
@@ -50,4 +49,18 @@ extension UIImage {
     func changeColor(to color: UIColor) -> UIImage {
         return self.withRenderingMode(.alwaysOriginal).withTintColor(color)
     }
+}
+
+extension UIView {
+  func removeGradient() {
+    layer.sublayers = nil
+  }
+  
+  func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.frame = bounds
+    gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+    gradientLayer.locations = [0.0, 1.0]
+    layer.insertSublayer(gradientLayer, at: 0)
+  }
 }

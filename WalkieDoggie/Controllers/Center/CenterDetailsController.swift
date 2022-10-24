@@ -11,6 +11,11 @@ class CenterDetailsController: UIViewController {
   
   var headerView: CenterDtHeaderView!
   
+  lazy var topGradientView: UIView = {
+    let view = UIView()
+    return view
+  }()
+  
   fileprivate let centerDtheaderId = "centerDtheaderId"
   fileprivate let descriptionCellId = "descriptionCellId"
   fileprivate let buttonCellId = "buttonCellId"
@@ -24,6 +29,65 @@ class CenterDetailsController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     setup()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.view.backgroundColor = .clear
+    navigationController?.navigationBar.barStyle = .black
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: "돌아가기",
+      style: .done,
+      target: self,
+      action: #selector(self.backToInitial(sender:)))
+    navigationItem.leftBarButtonItem?.tintColor = .white
+  }
+  
+  @objc func backToInitial(sender: AnyObject) {
+    self.navigationController?.popViewController(animated: true)
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    if !shouldShowHeader {
+      configureTopGradientView()
+    }
+  }
+  
+  private var lastShouldShowHeader = false
+  private var shouldShowHeader = false
+  private var topGradientViewHeight: NSLayoutConstraint!
+
+  private func configureTopGradientView() {
+    topGradientView.setGradientBackground(colorOne: .init(white: 0, alpha: 0.3), colorTwo: .clear)
+  }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if (scrollView.contentOffset.y > 110) {
+      shouldShowHeader = true
+    } else {
+      shouldShowHeader = false
+    }
+
+    guard shouldShowHeader != lastShouldShowHeader else { return }
+    
+    if shouldShowHeader {
+      topGradientView.removeGradient()
+      topGradientView.backgroundColor = .white
+      navigationController?.navigationBar.barStyle = .default
+      topGradientViewHeight.constant = 100
+      navigationItem.leftBarButtonItem?.tintColor = .black
+    } else {
+      topGradientView.backgroundColor = .clear
+      configureCollectionView()
+      navigationController?.navigationBar.barStyle = .black
+      topGradientViewHeight.constant = 50
+      navigationItem.leftBarButtonItem?.tintColor = .white
+    }
+    lastShouldShowHeader = shouldShowHeader
   }
   
   private func setup() {
@@ -59,10 +123,12 @@ class CenterDetailsController: UIViewController {
   
   private func addViews() {
     view.addSubview(collectionView)
+    view.addSubview(topGradientView)
   }
   
   private func setConstraints() {
     collectionViewConstraints()
+    topGradientViewConstraints()
   }
   
   private func collectionViewConstraints() {
@@ -73,7 +139,14 @@ class CenterDetailsController: UIViewController {
     collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   }
   
-  
+  private func topGradientViewConstraints() {
+    topGradientView.translatesAutoresizingMaskIntoConstraints = false
+    topGradientView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    topGradientView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    topGradientViewHeight = topGradientView.heightAnchor.constraint(equalToConstant: 50)
+    topGradientViewHeight.isActive = true
+    topGradientView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+  }
 }
 
 extension CenterDetailsController: UICollectionViewDelegate {
