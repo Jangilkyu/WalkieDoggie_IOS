@@ -10,6 +10,12 @@ import UIKit
 class CenterDetailsController: UIViewController {
   
   var headerView: CenterDtHeaderView!
+  var center: Center!
+
+  convenience init(center: Center) {
+    self.init()
+    self.center = center
+  }
   
   lazy var topGradientView: UIView = {
     let view = UIView()
@@ -186,9 +192,12 @@ extension CenterDetailsController: UICollectionViewDataSource {
       
     // DescriptionCell
     case 0:
-      cell = collectionView.dequeueReusableCell(
+      guard let infoCell = collectionView.dequeueReusableCell(
         withReuseIdentifier: descriptionCellId,
-        for: indexPath)
+        for: indexPath) as? CenterDtDescriptionCell else { return UICollectionViewCell() }
+      infoCell.centerDescLabel.text = center.intro
+      cell = infoCell
+      
     // Button Cell
     case 1:
       guard let buttonCell = collectionView.dequeueReusableCell(
