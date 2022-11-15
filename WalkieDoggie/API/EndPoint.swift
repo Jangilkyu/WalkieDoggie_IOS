@@ -14,7 +14,8 @@ enum EndPoint {
   case login
   case centers
   case refresh
-  
+  case users
+
   var url: URL {
     switch self {
     case . register:
@@ -25,7 +26,8 @@ enum EndPoint {
       return URL(string: "\(baseURL)/centers")!
     case .refresh:
       return URL(string: "\(baseURL)/auth/refresh")!
-      
+    case .users:
+      return URL(string: "\(baseURL)/users/me")!
     }
   }
 }
