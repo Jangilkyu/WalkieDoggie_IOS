@@ -35,6 +35,7 @@ class ProfileController: UIViewController {
   private func setup() {
     addViews()
     setConstraints()
+    configureEditButton()
   }
   
   private func addViews() {
@@ -47,6 +48,18 @@ class ProfileController: UIViewController {
     titleLabelConstraints()
     imageViewConstraints()
     editButtonConstraints()
+  }
+  
+  private func configureEditButton() {
+    editButton.button.addTarget(
+        self,
+        action: #selector(handleEditButton),
+        for: .touchUpInside
+    )
+  }
+  
+  @objc private func handleEditButton() {
+    print("handleEditButton")
   }
   
   private func titleLabelConstraints() {
