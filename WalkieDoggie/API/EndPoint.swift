@@ -7,7 +7,7 @@
 
 import Foundation
 
-let baseURL: String = "https://wkdg.herokuapp.com/api/v1"
+let baseURL: String = "https://walkiedoggie-server.onrender.com/api/v1"
 
 enum EndPoint {
   case register
