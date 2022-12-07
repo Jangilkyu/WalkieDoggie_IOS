@@ -211,8 +211,8 @@ extension LoginController: RestProcessorRequestDelegate {
         
         switch responseHandler.getResult() {
         case .ok(let headers, _):
-            guard let accessToken = headers.value(forKey: "Accesstoken"),
-                  let refreshToken = headers.value(forKey: "Refreshtoken") else { return }
+            guard let accessToken = headers.value(forKey: "accesstoken"),
+                  let refreshToken = headers.value(forKey: "refreshtoken") else { return }
 
             LS.setAccessToken(accessToken)
             LS.setRefreshToken(refreshToken)
