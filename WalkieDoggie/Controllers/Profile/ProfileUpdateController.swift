@@ -10,9 +10,8 @@ import UIKit
 class ProfileUpdateController: UIViewController {
   
   var user: User?
-  
+  var api: RestProcessor!
   let userInfoButton = InfoManagementButton(buttonTitle: "회원 정보")
-  
   let myInfoView = MyInfoView()
   
   override func viewDidLoad() {
@@ -21,9 +20,10 @@ class ProfileUpdateController: UIViewController {
     setup()
   }
   
-  convenience init(user: User) {
+  convenience init(_ user: User, _ api: RestProcessor) {
     self.init()
     self.user = user
+    self.api = api
     myInfoView.userNameLabel.text = user.name
     myInfoView.userPhoneNumberLabel.text = user.phoneNumber
     myInfoView.userEmailLabel.text = user.email
@@ -32,6 +32,7 @@ class ProfileUpdateController: UIViewController {
   private func setup() {
     addViews()
     setConstratins()
+    configureUserInfoButton()
   }
   
   private func addViews() {
@@ -42,6 +43,20 @@ class ProfileUpdateController: UIViewController {
   private func setConstratins() {
     userInfoButtonConstraints()
     myInfoViewConstraints()
+  }
+  
+  private func configureUserInfoButton() {
+    userInfoButton.button.addTarget(
+        self,
+        action: #selector(handleUserInfoButton),
+        for: .touchUpInside
+    )
+  }
+  
+  @objc private func handleUserInfoButton() {
+    guard let user = self.user else { return }
+    let passwordValidationController = PasswordValidationController(user, api)
+    navigationController?.pushViewController(passwordValidationController, animated: true)
   }
   
   private func userInfoButtonConstraints() {

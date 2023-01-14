@@ -33,7 +33,6 @@ class ProfileController: UIViewController {
     api = RestProcessor()
     api.requestDelegate = self
     view.backgroundColor = .white
-//    navigationItem.setHidesBackButton(true, animated: false)
     getMyInfo()
     setup()
   }
@@ -97,7 +96,7 @@ class ProfileController: UIViewController {
   @objc private func handleEditButton() {
     print("handleEditButton")
     guard let user = self.user else { return }
-    let profileUpdateController = ProfileUpdateController(user: user)
+    let profileUpdateController = ProfileUpdateController(user, api)
     self.navigationController?.pushViewController(profileUpdateController, animated: true)
   }
   
