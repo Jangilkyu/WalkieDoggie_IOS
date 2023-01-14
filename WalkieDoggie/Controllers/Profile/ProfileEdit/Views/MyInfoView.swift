@@ -19,7 +19,6 @@ class MyInfoView: UIView {
   let userNameLabel: UILabel = {
     let lb = UILabel()
     lb.font = WDFont.regular(size: 14)
-    lb.text = "장*규"
     return lb
   }()
   
@@ -33,7 +32,6 @@ class MyInfoView: UIView {
   let userEmailLabel: UILabel = {
     let lb = UILabel()
     lb.font = WDFont.regular(size: 14)
-    lb.text = "test@gmail.com"
     return lb
   }()
   
@@ -47,7 +45,6 @@ class MyInfoView: UIView {
   let userPhoneNumberLabel: UILabel = {
     let lb = UILabel()
     lb.font = WDFont.regular(size: 14)
-    lb.text = "010-****-7082"
     return lb
   }()
   
@@ -62,7 +59,6 @@ class MyInfoView: UIView {
   let userRoleLabel: UILabel = {
     let lb = UILabel()
     lb.font = WDFont.regular(size: 14)
-    lb.text = "천사"
     return lb
   }()
   
