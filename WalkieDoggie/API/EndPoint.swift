@@ -7,7 +7,7 @@
 
 import Foundation
 
-let baseURL: String = "https://walkiedoggie-server.onrender.com/api/v1"
+let baseURL: String = "https://walkiedoggie-real-server.onrender.com/api/v1"
 
 enum EndPoint {
   case register
@@ -15,6 +15,7 @@ enum EndPoint {
   case centers
   case refresh
   case users
+  case usersValid
 
   var url: URL {
     switch self {
@@ -28,6 +29,8 @@ enum EndPoint {
       return URL(string: "\(baseURL)/auth/refresh")!
     case .users:
       return URL(string: "\(baseURL)/users/me")!
+    case .usersValid:
+      return URL(string: "\(baseURL)/users/me/valid")!
     }
   }
 }

@@ -8,7 +8,10 @@
 import UIKit
 
 class ProfileController: UIViewController {
-  
+  var api: RestProcessor!
+  var resHandler: ResHandler!
+  var user: User?
+
   let titleLabel: UILabel = {
     let lb = UILabel()
     lb.text = "내 프로필"
@@ -27,10 +30,42 @@ class ProfileController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    api = RestProcessor()
+    api.requestDelegate = self
     view.backgroundColor = .white
-    navigationItem.setHidesBackButton(true, animated: false)
+    getMyInfo()
     setup()
   }
+  
+  private func getMyInfo() {
+    api.reqeustHttpHeaders.add(
+      value: "application/json",
+      forKey: "Content-Type"
+    )
+    
+    api.reqeustHttpHeaders.add(
+      value: "Bearer \(LS.getAccessToken()!)",
+      forKey: "authorization")
+    
+    api.makeRequest(
+      toURL: EndPoint.users.url,
+      withHttpMethod: .get,
+      usage: .users)
+  }
+  
+  private func refreshAccessToken() {
+    api.reqeustHttpHeaders.add(
+      value: "application/json",
+      forKey: "Content-Type")
+    api.reqeustHttpHeaders.add(
+      value: LS.getRefreshToken() ?? "",
+      forKey: "refreshtoken")
+    api.makeRequest(
+      toURL: EndPoint.refresh.url,
+      withHttpMethod: .get,
+      usage: .refresh)
+  }
+
   
   private func setup() {
     addViews()
@@ -60,6 +95,9 @@ class ProfileController: UIViewController {
   
   @objc private func handleEditButton() {
     print("handleEditButton")
+    guard let user = self.user else { return }
+    let profileUpdateController = ProfileUpdateController(user, api)
+    self.navigationController?.pushViewController(profileUpdateController, animated: true)
   }
   
   private func titleLabelConstraints() {
@@ -83,5 +121,39 @@ class ProfileController: UIViewController {
     editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35).isActive = true
     editButton.centerYAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
   }
+  
+}
+
+extension ProfileController: RestProcessorRequestDelegate {
+  func didFailToPrepareReqeust(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+    
+  }
+  
+  func didReceiveResponseFromDataTask(
+    _ result: RestProcessor.Results,
+    _ usage: EndPoint
+  ) {
+    resHandler = ResHandler(result: result)
+    if (usage == .users) {
+      switch resHandler.getResult() {
+      case .ok(_, let data):
+        if let data = data,
+           let user = try? JSONDecoder().decode(User.self, from: data) {
+          DispatchQueue.main.async {
+            self.user = user
+          }
+        }
+      case .accessTokenExpired:
+        refreshAccessToken()
+      default:
+        return
+      }
+    }
+
+  }
+  
   
 }

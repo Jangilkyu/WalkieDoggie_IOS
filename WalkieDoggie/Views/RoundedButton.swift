@@ -15,6 +15,7 @@ class RoundedButton: UIView {
         case loading
         case failure(fallBack: String)
         case success(completion: LottieCompletionBlock)
+        case reset(buttonTitle: String)
     }
     
     var buttonState: State = .initial {
@@ -43,6 +44,10 @@ class RoundedButton: UIView {
                     loopMode: .playOnce,
                     completion: completion
                 )
+            case .reset(let buttonTitle):
+              self.lottieView.isHidden = true
+              self.button.setTitle(buttonTitle, for: .normal)
+
                 default:
                     return
             }
